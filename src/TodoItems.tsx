@@ -10,19 +10,18 @@ class TodoItems extends Component<Props, {}> {
 
   constructor(props: Props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
     this.createTasks = this.createTasks.bind(this);
   }
 
-  handleClick = (key: any) => {
-    this.props.removeItem(key)
-  }
-
+  /*   handleClick = (key: any) => {
+      this.props.removeItem(key)
+    }
+   */
   createTasks(item: ListItem) {
     return <li
       className="todoItem__li"
       key={item.key}
-      onClick={this.handleClick.bind(() => this.handleClick(item.key))}
+      onClick={() => this.props.removeItem(item.key)}
     >{item.text}</li>
   }
 
