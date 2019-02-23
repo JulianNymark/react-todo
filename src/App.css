@@ -1,0 +1,51 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main__form-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    margin: 20px;
+    padding: 20px;
+    width: 50%;
+    background-color: lightgray;
+}
+
+.main__form-input {
+    flex: 1;
+    height: 2em;
+}
+
+.main__button {
+    border-radius: 3px;
+    border: none;
+    background-color: rgb(0, 214, 0);
+    text-align: center;
+}
+
+.App {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.todoItem__ul {
+    margin: 0;
+    padding: 0;
+    width: 50%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.todoItem__li {
+    padding: 20px;
+    margin: 5px;
+    display: inline-block;
+    list-style-type: none;
+    border-radius: 2px;
+    background-color: lightgray;
+}
