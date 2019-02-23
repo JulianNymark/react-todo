@@ -24,6 +24,12 @@
     border: none;
     background-color: rgb(0, 214, 0);
     text-align: center;
+    box-shadow: 0 0 2px 0px black;
+}
+
+.main__button:hover {
+    transition: all 0.1s;
+    box-shadow: 0 0 2px 2px black;
 }
 
 .App {
@@ -48,4 +54,11 @@
     list-style-type: none;
     border-radius: 2px;
     background-color: lightgray;
+    user-select: none;
+}
+
+.todoItem__li:hover {
+    transition: all 0.1s;
+    transform: translate(0, -2px);
+    box-shadow: 0 2px 2px 1px black;
 }
