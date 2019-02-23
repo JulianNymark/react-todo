@@ -35,6 +35,13 @@ class App extends Component<{}, State> {
     });
   }
 
+  removeItem = (itemKey: any) => {
+    let items = this.state.items;
+    const idx = items.findIndex((item) => item.key === itemKey);
+    items.splice(idx, 1);
+    this.setState({ items });
+  }
+
   handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({
       currentItem: { text: e.target.value, key: Date.now() }
@@ -50,7 +57,10 @@ class App extends Component<{}, State> {
           handleInput={this.handleInput}
           currentItem={this.state.currentItem}
         />
-        <TodoItems entries={this.state.items} />
+        <TodoItems
+          entries={this.state.items}
+          removeItem={this.removeItem}
+        />
       </div>
     )
   }
