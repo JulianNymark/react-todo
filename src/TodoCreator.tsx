@@ -7,7 +7,7 @@ interface Props {
   currentItem: any;
 }
 
-class TodoList extends Component<Props, {}> {
+export class TodoCreator extends Component<Props, {}> {
 
   constructor(props: Props) {
     super(props);
@@ -38,5 +38,3 @@ class TodoList extends Component<Props, {}> {
     )
   }
 }
-
-export default TodoList

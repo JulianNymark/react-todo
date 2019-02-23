@@ -1,7 +1,7 @@
 import React, { Component, FormEvent, createRef, ChangeEvent, RefObject } from 'react';
 import './App.css';
 
-import TodoList from './TodoList';
+import { TodoCreator } from './TodoCreator';
 import TodoItems from './TodoItems';
 
 interface State {
@@ -51,7 +51,7 @@ class App extends Component<{}, State> {
   render() {
     return (
       <div className="App">
-        <TodoList
+        <TodoCreator
           addItem={this.addItem}
           inputElement={this.inputElement}
           handleInput={this.handleInput}
