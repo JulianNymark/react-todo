@@ -30,6 +30,7 @@ export class TodoCreator extends Component<Props, {}> {
               ref={this.props.inputElement}
               value={this.props.currentItem.text}
               onChange={this.props.handleInput}
+              autoFocus
             />
             <button className="main__button" type="submit"> Add Task </button>
           </form>
