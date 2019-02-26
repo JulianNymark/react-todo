@@ -1,6 +1,7 @@
 import React, { Component, FormEvent, createRef, ChangeEvent, RefObject } from 'react';
-import './App.css';
+import interact from 'interactjs';
 
+import './App.css';
 import { TodoCreator } from './TodoCreator';
 import TodoItems from './TodoItems';
 
@@ -24,6 +25,14 @@ class App extends Component<{}, State> {
       items: [],
       currentItem: { text: '', key: '' },
     }
+  }
+
+  componentDidMount() {
+    interact('.drag-drop').draggable({
+      inertia: false,
+      autoScroll: true,
+      onmove: () => { console.log('onmove!') },
+    });
   }
 
   addItem = (e: FormEvent) => {
