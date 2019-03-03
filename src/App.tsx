@@ -1,9 +1,11 @@
-import React, { Component, FormEvent, createRef, ChangeEvent, RefObject } from 'react';
+import React, { Component, FormEvent, ChangeEvent, RefObject } from 'react';
 import interact from 'interactjs';
 
 import './App.css';
 import { TodoCreator } from './TodoCreator';
 import TodoItems from './TodoItems';
+import { DragEvent } from '@interactjs/actions';
+import { EventTarget } from '@interactjs/types/types';
 
 interface State {
   items: Array<ListItem>;
@@ -28,11 +30,84 @@ class App extends Component<{}, State> {
   }
 
   componentDidMount() {
+    interact('.dropzone').dropzone({
+      overlap: 0.50,
+
+      ondropactivate: function (event) {
+        // add active dropzone feedback
+        event.target.classList.add('drop-active');
+        console.log('ondropactivate!');
+      },
+      ondragenter: function (event) {
+        let draggableElement = event.relatedTarget;
+        let dropzoneElement = event.target;
+
+        // feedback the possibility of a drop
+        dropzoneElement.classList.add('drop-target');
+        draggableElement.classList.add('can-drop');
+        draggableElement.textContent = 'Dragged in';
+        console.log('ondragenter!');
+      },
+      ondragleave: function (event) {
+        // remove the drop feedback style
+        event.target.classList.remove('drop-target');
+        event.relatedTarget.classList.remove('can-drop');
+        event.relatedTarget.textContent = 'Dragged out';
+        console.log('ondragleave!');
+      },
+      ondrop: function (event) {
+        event.relatedTarget.textContent = 'Dropped';
+        console.log('ondrop!');
+      },
+      ondropdeactivate: function (event) {
+        // remove active dropzone feedback
+        event.target.classList.remove('drop-active');
+        event.target.classList.remove('drop-target');
+        console.log('ondropdeactivate!');
+      }
+    });
+
     interact('.drag-drop').draggable({
+      restrict: {
+        restriction: "self",
+        endOnly: true,
+        elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
+      },
       inertia: false,
       autoScroll: true,
-      onmove: () => { console.log('onmove!') },
+      onmove: dragMoveListener,
+      onstart: (event) => {
+        event.target.classList.remove('dropzone');
+        event.target.classList.remove('todoItem__li--dropzone-active');
+        event.target.classList.add('dragging');
+      },
+      onend: (event) => {
+        event.target.classList.add('dropzone');
+        event.target.classList.add('todoItem__li--dropzone-active');
+        event.target.classList.remove('dragging');
+        setTargetPos(event.target, 0, 0);
+      }
     });
+
+    function setTargetPos(target: HTMLElement, x: number, y: number) {
+      // translate the element
+      target.style.webkitTransform =
+        target.style.transform =
+        'translate(' + x + 'px, ' + y + 'px)';
+
+      // update the posiion attributes
+      target.setAttribute('data-x', `${x}`);
+      target.setAttribute('data-y', `${y}`);
+    }
+
+    function dragMoveListener(event: DragEvent) {
+      let target = event.target;
+      // keep the dragged position in the data-x/data-y attributes
+      let x = (parseFloat(target.getAttribute('data-x') || '0')) + event.dx;
+      let y = (parseFloat(target.getAttribute('data-y') || '0')) + event.dy;
+
+      setTargetPos(target as HTMLElement, x, y);
+    }
   }
 
   addItem = (e: FormEvent) => {

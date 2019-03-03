@@ -57,8 +57,17 @@
     user-select: none;
 }
 
-.todoItem__li:hover {
+.drop-target {
+    border: 2x solid teal;
+    background-color: red;
+}
+
+.todoItem__li--dropzone-active:hover {
     transition: all 0.1s;
     transform: translate(0, -2px);
     box-shadow: 0 2px 2px 1px black;
+}
+
+.dragging {
+    z-index: 1;
 }

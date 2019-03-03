@@ -19,9 +19,9 @@ class TodoItems extends Component<Props, {}> {
    */
   createTasks(item: ListItem) {
     return <li
-      className="todoItem__li drag-drop"
+      className="todoItem__li todoItem__li--dropzone-active drag-drop dropzone"
       key={item.key}
-      onClick={() => this.props.removeItem(item.key)}
+    // onClick={() => this.props.removeItem(item.key)}
     >{item.text}</li>
   }
 
