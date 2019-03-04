@@ -6,6 +6,7 @@ import { TodoCreator } from './TodoCreator';
 import TodoItems from './TodoItems';
 import { DragEvent } from '@interactjs/actions';
 import { EventTarget } from '@interactjs/types/types';
+import InteractEvent from '@interactjs/core/InteractEvent';
 
 interface State {
   items: Array<ListItem>;
@@ -45,18 +46,17 @@ class App extends Component<{}, State> {
         // feedback the possibility of a drop
         dropzoneElement.classList.add('drop-target');
         draggableElement.classList.add('can-drop');
-        draggableElement.textContent = 'Dragged in';
         console.log('ondragenter!');
       },
       ondragleave: function (event) {
         // remove the drop feedback style
         event.target.classList.remove('drop-target');
         event.relatedTarget.classList.remove('can-drop');
-        event.relatedTarget.textContent = 'Dragged out';
+        // event.relatedTarget.textContent = 'Dragged out';
         console.log('ondragleave!');
       },
       ondrop: function (event) {
-        event.relatedTarget.textContent = 'Dropped';
+        // event.relatedTarget.textContent = 'Dropped';
         console.log('ondrop!');
       },
       ondropdeactivate: function (event) {
@@ -76,14 +76,22 @@ class App extends Component<{}, State> {
       inertia: false,
       autoScroll: true,
       onmove: dragMoveListener,
-      onstart: (event) => {
-        event.target.classList.remove('dropzone');
-        event.target.classList.remove('todoItem__li--dropzone-active');
+      onstart: (event: DragEvent) => {
+        const children = event.target.children;
+        for (let child of children) {
+          if (child.classList.contains('dropzone-candidate')) {
+            child.classList.remove('dropzone');
+          }
+        }
         event.target.classList.add('dragging');
       },
       onend: (event) => {
-        event.target.classList.add('dropzone');
-        event.target.classList.add('todoItem__li--dropzone-active');
+        const children = event.target.children;
+        for (let child of children) {
+          if (child.classList.contains('dropzone-candidate')) {
+            child.classList.add('dropzone');
+          }
+        }
         event.target.classList.remove('dragging');
         setTargetPos(event.target, 0, 0);
       }

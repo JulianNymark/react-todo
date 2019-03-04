@@ -48,6 +48,8 @@
 }
 
 .todoItem__li {
+    position: relative;
+    display: block;
     padding: 20px;
     margin: 5px;
     display: inline-block;
@@ -62,10 +64,35 @@
     background-color: red;
 }
 
-.todoItem__li--dropzone-active:hover {
+.todoItem__dropzone-container {
+    padding: 0;
+}
+
+.todoItem__dropzone-container:hover {
     transition: all 0.1s;
     transform: translate(0, -2px);
     box-shadow: 0 2px 2px 1px black;
+}
+
+.todoItem__content {
+    margin: 10px;
+}
+
+.todoItem__dropzone {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border: solid 1px red;
+    padding: 0;
+    margin: 0;
+}
+
+.todoItem__dropzone--upper {
+    top: 50%;
+}
+
+.todoItem__dropzone--lower {
+    bottom: 50%;
 }
 
 .dragging {
